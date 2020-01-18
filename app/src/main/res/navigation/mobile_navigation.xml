@@ -13,16 +13,18 @@
 
         <action
             android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/navigation_home_second" />
+            app:destination="@id/navigation_home_second"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/navigation_home_second"
         android:name="com.baileytye.navcomponentdemo.ui.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/navigation_home" />
 
         <argument
             android:name="myArg"
@@ -33,11 +35,49 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.baileytye.navcomponentdemo.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_userNestedGraph"
+            app:destination="@id/userNestedGraph">
+            <argument
+                android:name="user"
+                app:argType="com.baileytye.navcomponentdemo.User" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.baileytye.navcomponentdemo.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <navigation
+        android:id="@+id/userNestedGraph"
+        app:startDestination="@id/userFragment" >
+        <fragment
+            android:id="@+id/userFragment"
+            android:name="com.baileytye.navcomponentdemo.ui.dashboard.UserFragment"
+            android:label="user_fragment"
+            tools:layout="@layout/fragment_user">
+            <argument
+                android:name="user"
+                app:argType="com.baileytye.navcomponentdemo.User" />
+            <action
+                android:id="@+id/action_userFragment_to_firstNameFragment"
+                app:destination="@id/firstNameFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:popUpTo="@id/userFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/firstNameFragment"
+            android:name="com.baileytye.navcomponentdemo.ui.dashboard.FirstNameFragment"
+            android:label="fragment_first_name"
+            tools:layout="@layout/fragment_first_name">
+            <argument
+                android:name="firstName"
+                app:argType="string" />
+        </fragment>
+    </navigation>
 </navigation>
